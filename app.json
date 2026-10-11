@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "Marketplace",
+    "slug": "marketplace",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "marketplace",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.goodnews.marketplace"
+    },
+    "android": {
+      "package": "com.goodnews.marketplace"
+    }
+  }
+}
