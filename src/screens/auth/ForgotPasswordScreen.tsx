@@ -7,6 +7,7 @@ import { Screen } from '../../components/Screen'
 import { TextField } from '../../components/TextField'
 import { useAuth } from '../../context/AuthContext'
 import { EMAIL_REGEX } from '../../lib/errors'
+import { leaveScreen } from '../../navigation/helpers'
 import type { RootStackParamList } from '../../navigation/types'
 import { colors } from '../../theme'
 
@@ -42,7 +43,7 @@ export function ForgotPasswordScreen({ navigation }: Props) {
         <Text style={styles.subtitle}>
           If an account exists for {email.trim()}, we sent a link to reset your password.
         </Text>
-        <Button title="Back to log in" onPress={() => navigation.goBack()} />
+        <Button title="Back to log in" onPress={() => leaveScreen(navigation)} />
       </Screen>
     )
   }

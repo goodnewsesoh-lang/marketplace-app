@@ -7,6 +7,7 @@ import { Screen } from '../../components/Screen'
 import { TextField } from '../../components/TextField'
 import { useAuth } from '../../context/AuthContext'
 import { EMAIL_REGEX, USERNAME_REGEX } from '../../lib/errors'
+import { leaveScreen } from '../../navigation/helpers'
 import type { RootStackParamList } from '../../navigation/types'
 import { colors } from '../../theme'
 
@@ -63,7 +64,7 @@ export function SignUpScreen({ navigation }: Props) {
       setCheckEmail(true)
       return
     }
-    navigation.goBack()
+    leaveScreen(navigation)
   }
 
   if (checkEmail) {
