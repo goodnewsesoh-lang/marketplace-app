@@ -21,3 +21,29 @@ export function friendlyAuthError(error: { message?: string } | null | undefined
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export const USERNAME_REGEX = /^[a-z0-9_]{3,30}$/
+
+type ErrorLike = { message?: string; code?: string } | null | undefined
+
+// Friendly messages for database and upload errors. Raw errors are never shown.
+export function friendlyDbError(error: ErrorLike): string {
+  const code = error?.code
+  const msg = (error?.message ?? '').toLowerCase()
+
+  if (code === '23505' && msg.includes('username')) return 'That username is already taken.'
+  if (code === '23505') return 'That value is already in use. Please try another.'
+  if (code === '23514' && msg.includes('username'))
+    return 'Username must be 3-30 characters: lowercase letters, numbers and underscores.'
+  if (code === '42501' || msg.includes('row-level security'))
+    return 'You do not have permission to do that.'
+  if (msg.includes('network') || msg.includes('fetch'))
+    return 'Could not connect. Check your internet connection and try again.'
+  return 'Something went wrong. Please try again.'
+}
+
+export function friendlyError(e: unknown): string {
+  const err = e as ErrorLike
+  if (err?.message === 'too_large') return 'That photo is too big. Choose one under 5 MB.'
+  if (err?.message === 'permission')
+    return 'Allow photo access in your phone settings to choose a photo.'
+  return friendlyDbError(err)
+}

@@ -11,6 +11,7 @@ import type { Session, User } from '@supabase/supabase-js'
 
 import { supabase } from '../lib/supabase'
 import { friendlyAuthError } from '../lib/errors'
+import type { SellerProfile } from '../types'
 
 export type Profile = {
   id: string
@@ -27,6 +28,7 @@ type AuthContextValue = {
   session: Session | null
   user: User | null
   profile: Profile | null
+  seller: SellerProfile | null
   loading: boolean
   signIn: (email: string, password: string) => Promise<Result>
   signUp: (input: {
@@ -39,6 +41,7 @@ type AuthContextValue = {
   resetPassword: (email: string) => Promise<Result>
   isUsernameAvailable: (username: string) => Promise<boolean>
   refreshProfile: () => Promise<void>
+  refreshSeller: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
@@ -46,6 +49,7 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [seller, setSeller] = useState<SellerProfile | null>(null)
   const [loading, setLoading] = useState(true)
 
   const loadProfile = useCallback(async (userId: string | undefined) => {
@@ -61,6 +65,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setProfile((data as Profile | null) ?? null)
   }, [])
 
+  const loadSeller = useCallback(async (userId: string | undefined) => {
+    if (!userId) {
+      setSeller(null)
+      return
+    }
+    const { data } = await supabase
+      .from('seller_profiles')
+      .select('*')
+      .eq('user_id', userId)
+      .maybeSingle()
+    setSeller((data as SellerProfile | null) ?? null)
+  }, [])
+
   useEffect(() => {
     let active = true
 
@@ -69,7 +86,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then(async ({ data }) => {
         if (!active) return
         setSession(data.session)
-        await loadProfile(data.session?.user.id)
+        await Promise.all([
+          loadProfile(data.session?.user.id),
+          loadSeller(data.session?.user.id),
+        ])
       })
       .catch(() => {
         // Offline or misconfigured: continue as a signed-out visitor.
@@ -80,9 +100,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession)
-      // Defer the profile query so it never runs inside the auth callback.
+      // Defer the queries so they never run inside the auth callback.
       setTimeout(() => {
         void loadProfile(newSession?.user.id)
+        void loadSeller(newSession?.user.id)
       }, 0)
     })
 
@@ -90,7 +111,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       active = false
       listener.subscription.unsubscribe()
     }
-  }, [loadProfile])
+  }, [loadProfile, loadSeller])
 
   const signIn = useCallback<AuthContextValue['signIn']>(async (email, password) => {
     const { error } = await supabase.auth.signInWithPassword({
@@ -124,6 +145,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signOut = useCallback(async () => {
     await supabase.auth.signOut()
     setProfile(null)
+    setSeller(null)
   }, [])
 
   const resetPassword = useCallback<AuthContextValue['resetPassword']>(async (email) => {
@@ -146,11 +168,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await loadProfile(session?.user.id)
   }, [loadProfile, session?.user.id])
 
+  const refreshSeller = useCallback(async () => {
+    await loadSeller(session?.user.id)
+  }, [loadSeller, session?.user.id])
+
   const value = useMemo<AuthContextValue>(
     () => ({
       session,
       user: session?.user ?? null,
       profile,
+      seller,
       loading,
       signIn,
       signUp,
@@ -158,10 +185,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       resetPassword,
       isUsernameAvailable,
       refreshProfile,
+      refreshSeller,
     }),
     [
       session,
       profile,
+      seller,
       loading,
       signIn,
       signUp,
@@ -169,6 +198,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       resetPassword,
       isUsernameAvailable,
       refreshProfile,
+      refreshSeller,
     ],
   )
 

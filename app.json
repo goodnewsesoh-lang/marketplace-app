@@ -7,6 +7,14 @@
     "userInterfaceStyle": "light",
     "scheme": "marketplace",
     "newArchEnabled": true,
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Marketplace needs access to your photos so you can add pictures to your profile, store and products."
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.goodnews.marketplace"

@@ -9,7 +9,7 @@ import type { RootStackParamList } from '../navigation/types'
 import { colors } from '../theme'
 
 export function AddScreen() {
-  const { user } = useAuth()
+  const { user, seller } = useAuth()
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
   if (!user) {
@@ -29,11 +29,25 @@ export function AddScreen() {
     )
   }
 
+  if (!seller) {
+    return (
+      <Screen>
+        <Text style={styles.title}>Sell on Marketplace</Text>
+        <Text style={styles.body}>
+          Create your store first, then you can add products for buyers to discover.
+        </Text>
+        <View style={styles.actions}>
+          <Button title="Become a seller" onPress={() => navigation.navigate('BecomeSeller')} />
+        </View>
+      </Screen>
+    )
+  }
+
   return (
     <Screen>
-      <Text style={styles.title}>Sell on Marketplace</Text>
+      <Text style={styles.title}>{seller.store_name}</Text>
       <Text style={styles.body}>
-        Seller setup and adding products are coming in the next build steps.
+        Your store is ready. Adding products with photos is the next build step.
       </Text>
     </Screen>
   )

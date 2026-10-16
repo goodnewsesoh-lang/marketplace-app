@@ -8,6 +8,8 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { AddScreen } from '../screens/AddScreen'
+import { BecomeSellerScreen } from '../screens/BecomeSellerScreen'
+import { EditProfileScreen } from '../screens/EditProfileScreen'
 import { ExploreScreen } from '../screens/ExploreScreen'
 import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen'
 import { HomeScreen } from '../screens/HomeScreen'
@@ -91,6 +93,16 @@ export function RootNavigator() {
         name="ForgotPassword"
         component={ForgotPasswordScreen}
         options={{ presentation: 'modal', title: 'Reset password' }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ title: 'Edit profile' }}
+      />
+      <Stack.Screen
+        name="BecomeSeller"
+        component={BecomeSellerScreen}
+        options={{ title: 'Your store' }}
       />
     </Stack.Navigator>
   )
