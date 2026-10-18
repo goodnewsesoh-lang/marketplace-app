@@ -7,8 +7,10 @@ import {
 } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
+import { AdminScreen } from '../screens/AdminScreen'
 import { AddScreen } from '../screens/AddScreen'
 import { BecomeSellerScreen } from '../screens/BecomeSellerScreen'
+import { DashboardScreen } from '../screens/DashboardScreen'
 import { EditProfileScreen } from '../screens/EditProfileScreen'
 import { ExploreScreen } from '../screens/ExploreScreen'
 import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen'
@@ -18,6 +20,7 @@ import { MyProductsScreen } from '../screens/MyProductsScreen'
 import { ProductDetailScreen } from '../screens/ProductDetailScreen'
 import { ProductFormScreen } from '../screens/ProductFormScreen'
 import { ProfileScreen } from '../screens/ProfileScreen'
+import { ReportScreen } from '../screens/ReportScreen'
 import { SavedScreen } from '../screens/SavedScreen'
 import { StoreScreen } from '../screens/StoreScreen'
 import { SignUpScreen } from '../screens/auth/SignUpScreen'
@@ -124,6 +127,17 @@ export function RootNavigator() {
         options={{ title: 'Product' }}
       />
       <Stack.Screen name="Store" component={StoreScreen} options={{ title: 'Store' }} />
+      <Stack.Screen
+        name="Dashboard"
+        component={DashboardScreen}
+        options={{ title: 'Seller dashboard' }}
+      />
+      <Stack.Screen
+        name="Report"
+        component={ReportScreen}
+        options={{ presentation: 'modal', title: 'Report' }}
+      />
+      <Stack.Screen name="Admin" component={AdminScreen} options={{ title: 'Admin' }} />
     </Stack.Navigator>
   )
 }

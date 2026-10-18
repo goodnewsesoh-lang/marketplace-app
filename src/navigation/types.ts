@@ -19,4 +19,7 @@ export type RootStackParamList = {
   MyProducts: undefined
   ProductDetail: { productId: string }
   Store: { sellerId: string }
+  Dashboard: undefined
+  Report: { targetType: 'product' | 'seller'; targetId: string }
+  Admin: undefined
 }

@@ -82,7 +82,13 @@ export function ProfileScreen() {
               {seller.location ? ` · ${seller.location}` : ''}
             </Text>
             <Button
+              title="Seller dashboard"
+              onPress={() => navigation.navigate('Dashboard')}
+              style={styles.cardButton}
+            />
+            <Button
               title="My products"
+              variant="secondary"
               onPress={() => navigation.navigate('MyProducts')}
               style={styles.cardButton}
             />
@@ -107,6 +113,12 @@ export function ProfileScreen() {
           </>
         )}
       </View>
+
+      {profile?.is_admin ? (
+        <View style={styles.actions}>
+          <Button title="Admin area" onPress={() => navigation.navigate('Admin')} />
+        </View>
+      ) : null}
 
       <View style={styles.actions}>
         <Button title="Log out" variant="secondary" onPress={onSignOut} loading={signingOut} />

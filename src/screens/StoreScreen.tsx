@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import { Button } from '../components/Button'
@@ -170,6 +170,15 @@ export function StoreScreen({ navigation, route }: Props) {
         </View>
       ) : null}
 
+      {!isOwn ? (
+        <Pressable
+          onPress={() => navigation.navigate('Report', { targetType: 'seller', targetId: store.id })}
+          accessibilityRole="button"
+        >
+          <Text style={styles.report}>Report this seller</Text>
+        </Pressable>
+      ) : null}
+
       <Text style={styles.section}>Products ({products.length})</Text>
       {products.length === 0 ? (
         <Text style={styles.muted}>This store has no products yet.</Text>
@@ -197,6 +206,7 @@ const styles = StyleSheet.create({
   muted: { fontSize: 14, color: colors.muted, marginTop: 2 },
   description: { fontSize: 15, color: colors.text, lineHeight: 22, marginVertical: 14 },
   error: { color: colors.danger, fontSize: 14, marginTop: 8 },
+  report: { color: colors.muted, fontSize: 13, textDecorationLine: 'underline', marginTop: 14 },
   contact: { marginTop: 12 },
   section: { fontSize: 18, fontWeight: '700', color: colors.text, marginTop: 24, marginBottom: 12 },
 })

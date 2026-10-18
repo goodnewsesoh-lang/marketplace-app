@@ -254,6 +254,17 @@ export function ProductDetailScreen({ navigation, route }: Props) {
             {formatDate(product.created_at)}
           </Text>
 
+          {!ownProduct ? (
+            <Pressable
+              onPress={() =>
+                navigation.navigate('Report', { targetType: 'product', targetId: product.id })
+              }
+              accessibilityRole="button"
+            >
+              <Text style={styles.report}>Report this product</Text>
+            </Pressable>
+          ) : null}
+
           {store ? (
             <View style={styles.storeCard}>
               <Pressable
@@ -365,5 +376,6 @@ const styles = StyleSheet.create({
   storeInitial: { color: '#fff', fontSize: 20, fontWeight: '700' },
   storeInfo: { flex: 1 },
   storeName: { fontSize: 16, fontWeight: '700', color: colors.text },
+  report: { color: colors.muted, fontSize: 13, textDecorationLine: 'underline', marginTop: 14 },
   chevron: { fontSize: 28, color: colors.muted },
 })

@@ -50,6 +50,11 @@ export function AddScreen() {
       <View style={styles.actions}>
         <Button title="Add a product" onPress={() => navigation.navigate('ProductForm')} />
         <Button
+          title="Seller dashboard"
+          variant="secondary"
+          onPress={() => navigation.navigate('Dashboard')}
+        />
+        <Button
           title="My products"
           variant="secondary"
           onPress={() => navigation.navigate('MyProducts')}
