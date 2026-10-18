@@ -25,6 +25,21 @@ export async function pickImage(aspect: [number, number] = [1, 1]): Promise<stri
   return result.assets[0].uri
 }
 
+// Opens the photo library to choose several photos at once. Returns local uris.
+export async function pickImages(limit: number): Promise<string[]> {
+  const permission = await ImagePicker.requestMediaLibraryPermissionsAsync()
+  if (!permission.granted) throw new Error('permission')
+
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ['images'],
+    allowsMultipleSelection: true,
+    selectionLimit: limit,
+    quality: 0.7,
+  })
+  if (result.canceled) return []
+  return result.assets.map((asset) => asset.uri)
+}
+
 function typeFromUri(uri: string): { ext: string; contentType: string } {
   const ext = (uri.split('?')[0].split('.').pop() ?? '').toLowerCase()
   if (ext === 'png') return { ext: 'png', contentType: 'image/png' }

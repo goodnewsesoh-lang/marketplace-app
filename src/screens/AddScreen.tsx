@@ -46,9 +46,15 @@ export function AddScreen() {
   return (
     <Screen>
       <Text style={styles.title}>{seller.store_name}</Text>
-      <Text style={styles.body}>
-        Your store is ready. Adding products with photos is the next build step.
-      </Text>
+      <Text style={styles.body}>What would you like to do?</Text>
+      <View style={styles.actions}>
+        <Button title="Add a product" onPress={() => navigation.navigate('ProductForm')} />
+        <Button
+          title="My products"
+          variant="secondary"
+          onPress={() => navigation.navigate('MyProducts')}
+        />
+      </View>
     </Screen>
   )
 }

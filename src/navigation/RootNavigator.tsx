@@ -14,6 +14,8 @@ import { ExploreScreen } from '../screens/ExploreScreen'
 import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen'
 import { HomeScreen } from '../screens/HomeScreen'
 import { LoginScreen } from '../screens/auth/LoginScreen'
+import { MyProductsScreen } from '../screens/MyProductsScreen'
+import { ProductFormScreen } from '../screens/ProductFormScreen'
 import { ProfileScreen } from '../screens/ProfileScreen'
 import { SavedScreen } from '../screens/SavedScreen'
 import { SignUpScreen } from '../screens/auth/SignUpScreen'
@@ -103,6 +105,16 @@ export function RootNavigator() {
         name="BecomeSeller"
         component={BecomeSellerScreen}
         options={{ title: 'Your store' }}
+      />
+      <Stack.Screen
+        name="ProductForm"
+        component={ProductFormScreen}
+        options={{ title: 'Product' }}
+      />
+      <Stack.Screen
+        name="MyProducts"
+        component={MyProductsScreen}
+        options={{ title: 'My products' }}
       />
     </Stack.Navigator>
   )

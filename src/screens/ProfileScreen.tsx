@@ -82,6 +82,11 @@ export function ProfileScreen() {
               {seller.location ? ` · ${seller.location}` : ''}
             </Text>
             <Button
+              title="My products"
+              onPress={() => navigation.navigate('MyProducts')}
+              style={styles.cardButton}
+            />
+            <Button
               title="Edit store"
               variant="secondary"
               onPress={() => navigation.navigate('BecomeSeller')}

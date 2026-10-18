@@ -15,4 +15,6 @@ export type RootStackParamList = {
   ForgotPassword: undefined
   EditProfile: undefined
   BecomeSeller: undefined
+  ProductForm: { productId?: string } | undefined
+  MyProducts: undefined
 }
