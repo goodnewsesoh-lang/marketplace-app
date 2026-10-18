@@ -15,9 +15,11 @@ import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen'
 import { HomeScreen } from '../screens/HomeScreen'
 import { LoginScreen } from '../screens/auth/LoginScreen'
 import { MyProductsScreen } from '../screens/MyProductsScreen'
+import { ProductDetailScreen } from '../screens/ProductDetailScreen'
 import { ProductFormScreen } from '../screens/ProductFormScreen'
 import { ProfileScreen } from '../screens/ProfileScreen'
 import { SavedScreen } from '../screens/SavedScreen'
+import { StoreScreen } from '../screens/StoreScreen'
 import { SignUpScreen } from '../screens/auth/SignUpScreen'
 import { colors } from '../theme'
 import type { RootStackParamList, TabParamList } from './types'
@@ -116,6 +118,12 @@ export function RootNavigator() {
         component={MyProductsScreen}
         options={{ title: 'My products' }}
       />
+      <Stack.Screen
+        name="ProductDetail"
+        component={ProductDetailScreen}
+        options={{ title: 'Product' }}
+      />
+      <Stack.Screen name="Store" component={StoreScreen} options={{ title: 'Store' }} />
     </Stack.Navigator>
   )
 }

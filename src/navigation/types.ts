@@ -2,7 +2,7 @@ import type { NavigatorScreenParams } from '@react-navigation/native'
 
 export type TabParamList = {
   Home: undefined
-  Explore: undefined
+  Explore: { categoryId?: string } | undefined
   Add: undefined
   Saved: undefined
   Profile: undefined
@@ -17,4 +17,6 @@ export type RootStackParamList = {
   BecomeSeller: undefined
   ProductForm: { productId?: string } | undefined
   MyProducts: undefined
+  ProductDetail: { productId: string }
+  Store: { sellerId: string }
 }
